@@ -1,5 +1,3 @@
-//test syncing 
-
 import Navbar from "@/components/Navbar";
 import FeaturesSection from "@/components/FeaturesSection";
 import Image from "next/image";
