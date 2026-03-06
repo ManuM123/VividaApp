@@ -1,5 +1,3 @@
-# test backend git repo sync
-
 import os
 from dotenv import load_dotenv
 
