@@ -1,0 +1,43 @@
+name: Backend Tests
+
+# When should this run?
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  pytest-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Grab the code from GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install Python 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      # 3. Go into the backend folder and install your libraries
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest httpx 
+
+      # 4. Run the actual tests
+      - name: Run Tests
+        env:
+          # We need these placeholders so FastAPI doesn't crash 
+          # when it tries to load your config.py
+          SUPABASE_URL: "https://placeholder.supabase.co"
+          SUPABASE_KEY: "placeholder-key"
+        run: |
+          cd backend
+          export PYTHONPATH=$PYTHONPATH:.
+          pytest

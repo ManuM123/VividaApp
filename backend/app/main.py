@@ -10,7 +10,12 @@ from datetime import date, timedelta
 
 from app.config import supabase
 
+
 app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"status": "ok", "message": "Vivida app is running"}
 
 app.add_middleware(
     CORSMiddleware,
@@ -19,47 +24,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# TESTING DATE: you can change this to simulate different days
+# TESTING DATE:  can change this to simulate different days
 TEST_DATE = date(2026, 1, 18)
 
 class DailyExerciseRequest(BaseModel):
     user_id: str
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()  # MUST be before importing supabase
-
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from datetime import date, timedelta
-
-from app.config import supabase
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-class DailyExerciseRequest(BaseModel):
-    user_id: str
-
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
 
 @app.post("/daily-exercise/complete")
